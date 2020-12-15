@@ -11,6 +11,6 @@ Valid upto 9 digits
 
 (moreThan9.py):
 
-Valid upto 18 digits
+Valid upto 16 digits
 
 Upload still under test
