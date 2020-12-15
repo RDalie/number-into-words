@@ -6,7 +6,8 @@ number_dict = {'0':'zero','1':'one','2':'two','3':'three','4':'four','5':'five',
 '70':'seventy','80':'eighty','90':'ninety','100':'one hundred'}
 
 while True:
-    number_input = input('Write the number:')
+    number_input = input('\nWrite the number:')
+
     #checks for an input with starting value 0,multiple 0s like 0000 or 00 or 00
     number_input=number_input.lstrip('0')
     if len(number_input)<1:
@@ -14,12 +15,12 @@ while True:
         continue
     else:
          pass
-    #dividing a number into two parts
+
+    #dividing a number into two parts if greater than 9 digits
     parts=list()
     if len(number_input)>9:
         number_part1=number_input[-7:]
         parts.append(number_part1)
-
         number_part2=number_input[:-7]
         parts.append(number_part2)
     else:
@@ -27,15 +28,13 @@ while True:
     # print(number_part1,number_part2)
 
     words=list()
-
-
-
     number_len=len(number_input)
     times=1
     # print(parts)
+    #looping through 1 or 2 parts
     for number in parts:
-
         # print(number)
+        #checking if a divided number consists of zeroes only
         number=number.lstrip('0')
         if len(number)<1:
             times=times+1
@@ -43,34 +42,41 @@ while True:
         else:
              pass
 
+        #word check for the 2nd part of the number
         if times==2:
             words.append('crore')
+
         #checks if the number is already present in our dictionary otherwise passes on for more processing
         try:
             words.append(number_dict[number])
             found=True
             continue
-
         except:
             found=False
             pass
 
-        number_len=len(number)
 
+        number_len=len(number)
         #word assigning code block
         if not found:
             while True:
                 # print(len(number))
-                if number[-1]!='0': #getting words only if the number is non-zero
-                    ones=number[-1]
+                try: #checks if the tens and ones place is a teen number
+                    ones=number[-2]+number[-1]
                     ones_words=number_dict[ones]
                     words.append(ones_words)
+                    if number_len == 2:break
+                except:
+                    if number[-1]!='0': #getting words only if the number is non-zero
+                        ones=number[-1]
+                        ones_words=number_dict[ones]
+                        words.append(ones_words)
 
-                if number[-2]!='0':
-                    tens=number[-2]+'0'
-                    tens_words=number_dict[tens]
-                    words.append(tens_words)
-                    if number_len ==2:break #for two digit number
+                    if number[-2]!='0':
+                        tens=number[-2]+'0'
+                        tens_words=number_dict[tens]
+                        words.append(tens_words)
+                        if number_len ==2:break #for two digit number
 
                 if number[-3]!='0':
                     hundreds=number[-3]
@@ -109,7 +115,7 @@ while True:
                         lakhs_words=number_dict[lakhs] + ' lakh'
                         words.append(lakhs_words)
                         if number_len ==6: break #for six digit number
-                        # print(lakhs_words,ten_thousands,thousands_words,hundreds_words,tens_words,ones_words)
+                        
                     if number[-7]!='0':
                         ten_lakhs=number[-7]+'0'
                         ten_lakhs_words=number_dict[ten_lakhs]
