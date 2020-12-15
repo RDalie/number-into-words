@@ -8,6 +8,17 @@ number_dict = {'0':'zero','1':'one','2':'two','3':'three','4':'four','5':'five',
 while True:
     number_input = input('\nWrite the number:')
 
+    #for numbers with commas
+    if ',' in number_input:
+        number_input=number_input.replace(',','')
+
+    #sanity check
+    try:
+        int(number_input)
+    except:
+        print('Put a valid number!')
+        continue
+
     #checks for an input with starting value 0,multiple 0s like 0000 or 00 or 00
     number_input=number_input.lstrip('0')
     if len(number_input)<1:
@@ -115,7 +126,7 @@ while True:
                         lakhs_words=number_dict[lakhs] + ' lakh'
                         words.append(lakhs_words)
                         if number_len ==6: break #for six digit number
-                        
+
                     if number[-7]!='0':
                         ten_lakhs=number[-7]+'0'
                         ten_lakhs_words=number_dict[ten_lakhs]
